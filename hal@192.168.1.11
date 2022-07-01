@@ -1,0 +1,16 @@
+{
+  "name": "Smile! #3",
+  "description": "Smile!  NFT Collection",
+  "format": "CHIP-0007",
+  "sensitive_content": false,
+  "collection": {
+    "name": "Smile!",
+    "id": "c899af95-c521-8c28-2432-c45652acf89",
+    "attributes": [
+      {
+        "type": "twitter",
+        "value": "SmileHarderPls"
+      }
+    ]
+  }
+}
