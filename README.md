@@ -1,12 +1,12 @@
 # chia-nft-minting-helper
 
+Version 0.3: Added automatic image and metadata uploading. Thanks to @steppsr. Also removed the target address option from minting and changed the deault fee to 0, thanks to scrutinous for the tip. 
+
 NOTE: THIS SCRIPT IS IN ALPHA, PLEASE USE AT YOUR OWN RISK! ONLY COMPATIBLE WITH LINUX, DO NOT USE ON MACOS! I SUGGEST YOU TRY ON TESTNET FIRST
 
 a bash script to help make the process of minting a series of NFTs on the Chia Blockchain easier.
 
 This script is in ALPHA, so please use at your own risk. I welcome anyone working on this to improve it. This is the first bash script I've ever written. 
-
-I tried to create a Python script to upload the images via the command line, but I couldn't figure out how to get it work. Feel free to take a look at it and fix it if you know how. Pull requests / forking encouraged. 
 
 I also want to create another script to create the offer files and upload them to Dexie, but that is TBD.
 
@@ -25,18 +25,19 @@ INSTRUCTIONS
 		metadata must be saved as metadata1.json, metadata2.json, metadata3.json, with the numbers on the images and metadata matching up for the same NFT.
 	NOTE: I will soon release a tool for metadata file generation to make the process easier.
 
-4. Sign up for an account at NFT.storage
+4. Sign up for an account at nft.storage and get an API Key
 
 5. Customize all variables in the script 'mintingscript.sh' by opening it with a text editor. Make sure you are clear on what they are all for. Many questions can be answered in the Chia NFT documentation, linked above.
 
+6. Install the dependencies: curl and jq. example: if using Ubuntu with apt, run the following commands:
+		sudo apt update
+		sudo apt upgrade
+		sudo apt install curl
+		sudo apt install jq
+
 6. Run the script by navigating to the directory of the script and executing the command './mintingscript.sh'
 
-7. The script will prompt you for the image1 CID. Upload image1 to nft.storage and paste the CID it gives you. If you accidentally paste the wrong CID, don't worry, because the script will make sure the hash matches up with the hash of
-the local file.
-
-8. The script will prompt you for the image1 metadata CID. Upload metadata1 to nft.storage and paste the CID it gives you. If you accidentally paste the wrong CID, don't worry.
-
-9. Before minting the NFT, the script will prompt you to review the minting command. Please review this command against the Chia documentation for minting a single NFL. Once you continue, the NFT will be created , final & permanent.
+9. Before minting each NFT, the script will prompt you to review the minting command. Please review this command against the Chia documentation for minting a single NFL. Once you continue, the NFT will be created , final & permanent.
 
 10. Continue through the process to mint all NFTs. If you have to stop the script, or get an error, you can open the script in a text editor and change the 'i' variable to resume wherever you left off.
 

@@ -1,5 +1,7 @@
 #! /bin/bash
 
+# Version 0.3 Alpha
+
 # Requirements : 
 
 # To use this script, you must have the Chia client installed from source on a Linux operating system.
@@ -20,6 +22,9 @@
 # Extension of your images
 img_ext=".jpeg"
 
+# nft.storage API Key
+api_key="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkaWQ6ZXRocjoweDc2YjQ1ZTEzMjJmNzFCYzFDYWVkYUY4YURlZjI5RTY2M0QxMGEyODIiLCJpc3MiOiJuZnQtc3RvcmFnZSIsImlhdCI6MTY1NjYyMjg3MzUxNywibmFtZSI6InNtaWxlIn0.hmWdbte6KvLvs0Gw0W30vBirEfkAa31vczMK7kQH_OE"
+
 # Total number to mint with this script. Should match the number of image files and number of metadata files.
 total_num_to_mint=30
 
@@ -35,14 +40,11 @@ nft_wallet_id=8
 # Address loyalty rewards will go to
 royalty_wallet_address='xch103m57yshjuualzslespw4jgg4lgc5jufzmdtn77xkdt2erhtk9hqzp0ynr'
 
-# Address the NFT will go to once minted
-wallet_to_recieve_nft='xch103m57yshjuualzslespw4jgg4lgc5jufzmdtn77xkdt2erhtk9hqzp0ynr'
-
 # Royalty percentage as a whole integer. Ex. '8' will be 8%
 royalty_percentage=8
 
 #Minting fee, in XCH
-blockchain_minting_fee=0.00005
+blockchain_minting_fee=0
 
 # Directory this file is in. Probably no need to change this
 localdir="./"
@@ -58,49 +60,66 @@ i=1
 while (( $i <= $total_num_to_mint ))
 do
 	# Check if image exists
-	FILE=${localdir}images/image${i}${img_ext}
-	if [ ! -f "$FILE" ]; then
+	image_path=${localdir}images/image${i}${img_ext}
+	if [ ! -f "$image_path" ]; then
 		echo "User-specified image path ${localdir}images/image${i}${img_ext} does not exist! Check settings. Now exiting."
 		exit
 	fi
 
 	# Check if metadata exists
-	FILE=${localdir}metadata/metadata${i}.json
-	if [ ! -f "$FILE" ]; then
+	metadata_path=${localdir}metadata/metadata${i}.json
+	if [ ! -f "$metadata_path" ]; then
 		echo "User-specified metadata path ${localdir}metadata/metadata${i}.json does not exist! Check settings. Now exiting."
 		exit
 	fi
 
-	f= "${localdir}images/image${i}${img_ext}"
+	# Upload image to nft.storage
+	echo "Uploading image${i}"
+	
+	response=`curl -X 'POST' "https://api.nft.storage/upload" \
+		-H "accept: application/json" \
+		-H "content-Type: image/*" \
+		-H "Authorization: Bearer $api_key" \
+		--data-binary "@$image_path"`
 
-	# Read image CID and return CID as variable
-	read -p "Image $i CID: " image_cid
+	image_cid=$(echo $response | jq -r '.value.cid')
+	
 	image_url="https://${image_cid}.ipfs.nftstorage.link"
+	echo "Image uploaded successfully. Image url = $image_url"
 
 	# Check if hash of image locally and online match, then save hash as variable
 	local_image_hash=$(sha256sum ${localdir}images/image${i}${img_ext} | head -c 64)
 	remote_image_hash=$(curl -s $image_url | sha256sum | head -c 64)
 	if [ $remote_image_hash == $local_image_hash ]
 	then
-		echo "Remote hash matches local hash! Proceeding"
-		echo $image_url
+		echo "Remote image hash matches local image hash! Proceeding."
 	else
 		echo "Remote hash does not match local hash. Possible user error. Exiting now."
 		echo "url: $image_url hash of local file: $local_image_hash hash of remote file: $remote_image_hash"
 		exit
 	fi
 
-	# Read metadata and return CID as variable
-	read -p "Metadata $i CID: " metadata_cid
+
+
+	# Upload metadata to nft.storage
+	echo "Uploading metadata${i}"
+
+	response=`curl -X 'POST' "https://api.nft.storage/upload" \
+		-H "accept: application/json" \
+		-H "content-Type: application/json" \
+		-H "Authorization: Bearer $api_key" \
+		--data-binary "@$metadata_path"`
+
+	metadata_cid=$(echo $response | jq -r '.value.cid')
 	metadata_url="https://${metadata_cid}.ipfs.nftstorage.link"
+	echo "Metadata uploaded successfully. Metadata url = $metadata_url"
 	
 	# Check if hash of metadata locally and online match, then save hash as variable
 	local_metadata_hash=$(sha256sum ${localdir}metadata/metadata${i}.json | head -c 64)
 	remote_metadata_hash=$(curl -s $metadata_url | sha256sum | head -c 64)
 	if [ $remote_metadata_hash == $local_metadata_hash ]
 	then
-		echo "Remote hash matches local hash! Proceeding"
-		echo $metadata_url
+		echo "Remote metadata hash matches local metadata hash! Proceeding"
 	else
 		echo "Remote hash does not match local hash. Possible user error. Exiting now."
 		echo "url: $metadata_url hash of local file: $local_metadata_hash hash of remote file: $remote_metadata_hash"
@@ -109,7 +128,7 @@ do
 
 	# Create command & Validate with user
 	echo "Please validate the minting details before execution:"
-	read -p "chia wallet nft mint -f $nft_wallet_fingerprint -i $nft_wallet_id -ra $royalty_wallet_address -ta $wallet_to_recieve_nft -u $image_url -nh $local_image_hash -mu $metadata_url -mh $local_metadata_hash -sn $i -st $total_num_in_series -rp $royalty_percentage -m $blockchain_minting_fee \n Would you like to mint your NFT? Final answer (y/n)" response
+	read -p "chia wallet nft mint -f $nft_wallet_fingerprint -i $nft_wallet_id -ra $royalty_wallet_address -u $image_url -nh $local_image_hash -mu $metadata_url -mh $local_metadata_hash -sn $i -st $total_num_in_series -rp $royalty_percentage -m $blockchain_minting_fee \n Would you like to mint your NFT? Final answer (y/n)" response
        if [ $response == "y" ]
        then
 		echo "Proceeding to mint..."
@@ -123,7 +142,8 @@ do
 	# Start Chia and Execute minting command
 	cd ~/chia-blockchain
 	. ./activate
-	chia wallet nft mint -f $nft_wallet_fingerprint -i $nft_wallet_id -ra $royalty_wallet_address -ta $wallet_to_recieve_nft -u $image_url -nh $local_image_hash -mu $metadata_url -mh $local_metadata_hash -sn $i -st $total_num_in_series -rp $royalty_percentage -m $blockchain_minting_fee
+	chia wallet show
+	#chia wallet nft mint -f $nft_wallet_fingerprint -i $nft_wallet_id -ra $royalty_wallet_address -u $image_url -nh $local_image_hash -mu $metadata_url -mh $local_metadata_hash -sn $i -st $total_num_in_series -rp $royalty_percentage -m $blockchain_minting_fee
 	deactivate
 	i=$((i+1))
 done
