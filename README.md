@@ -13,7 +13,7 @@ I also want to create another script to create the offer files and upload them t
 Happy minting!
 
 
-INSTRUCTIONS
+### INSTRUCTIONS
 
  1. Follow instructions at https://devs.chia.net/guides/nft-intro to create a DID wallet and NFT wallet in the CLI. Make sure the wallet is funded with enough XCH to mint an NFT. If you don't have enough, you can get some from
 	the Chia faucet.
@@ -39,6 +39,29 @@ the local file.
 9. Before minting the NFT, the script will prompt you to review the minting command. Please review this command against the Chia documentation for minting a single NFL. Once you continue, the NFT will be created , final & permanent.
 
 10. Continue through the process to mint all NFTs. If you have to stop the script, or get an error, you can open the script in a text editor and change the 'i' variable to resume wherever you left off.
+
+### PYTHON UPLOAD INSTRUCTIONS
+#### For both `upload.py` and `upload_cli.py`:
+1. Set up your python environment, install required modules (only `click` as of right now):
+
+	```bash
+	pip install -r requirements.txt
+	```
+2. Change name of the `config_example.py` to `config.py` and supply your apikey. `config.py` is in the `.gitignore`
+3. Run the script
+- If running `upload.py` modify the file name/file path then run 
+	```bash 
+	python upload.py
+	```
+- If using `upload_cli.py` for help you can run:
+```bash
+python upload_cli.py -h
+``` 
+ Otherwise:
+ ```bash
+ python upload_cli.py filename.jpg # The -s and -api are optional
+ python upload_cli.py -s "https://api.nft.storage" -api "API_KEY" filename.jpg
+```
 
 I am happy to help with any questions anyone has.
 
