@@ -2,6 +2,8 @@
 
 ## CHANGELOG
 
+Version 0.4 hotfix: changed metadata generation script to change sensitive content value from string to bool to be in line with Chia official schema. For the time being, the sensitive content value will always be set to false, regardless of what is entered in the CSV.
+
 Version 0.4: Added a Python script for automatic metadata generation
 
 Version 0.3: Added automatic image and metadata uploading. Thanks to @steppsr. Also removed the target address option from minting and changed the deault fee to 0, thanks to scrutinous for the tip. Also added Python script to do the same by @Rosko. More documentation coming 
