@@ -70,6 +70,7 @@ Your metadata will now be present in the /metadata folder. You can proceed to mi
 ##### Advanced: Metadata individual attributes:
 
 If you would like to create individual attributes, open the metadata_config.py file in a text editor and change the indvdl_attributes variable at the bottom from False to True. Folow step 3 above, except create a metadata_generation_csv_with_attributes.csv. An example can be found in metadata_generation_csv_with_attributes_example.csv.
+You can have as many attributes as you'd like , just delete or add columns to the CSV file. 
 
 #### 2. NFT MINTING
  1. Follow instructions at https://devs.chia.net/guides/nft-intro to create a DID wallet and NFT wallet in the CLI. Make sure the wallet is funded with enough XCH to mint an NFT. If you don't have enough, you can get some from
