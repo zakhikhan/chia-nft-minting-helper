@@ -1,12 +1,12 @@
 # chia-nft-minting-helper
 
-## Changelog
+## CHANGELOG
 
 Version 0.4: Added a Python script for automatic metadata generation
 
 Version 0.3: Added automatic image and metadata uploading. Thanks to @steppsr. Also removed the target address option from minting and changed the deault fee to 0, thanks to scrutinous for the tip. Also added Python script to do the same by @Rosko. More documentation coming 
 
-## About
+## ABOUT
 
 NOTE: This script is still an alpha prototype. If you have tested it, please let me know, as your feedback will be immensely helpful. 
 
@@ -16,9 +16,7 @@ I also want to create another script to create the offer files and upload them t
 
 Happy minting!
 
-## Supported operating systems
 
-Linux only at the moment. Not tested on MacOS, though I do have a Mac so I will test it soon.
 
 ## INSTALL INSTRUCTIONS
 
@@ -35,7 +33,11 @@ Update using
 cd chia-nft-minting-helper
 git pull
 ```
+## DEPENDENCIES
 
+Linux is the only OS that is supported at the moment. Not tested on MacOS, though I do have a Mac so I will test it soon.
+Chia wallet 1.4 or greater
+curl and jq packages (install instructions below)
 
 ## USAGE INSTRUCTIONS
 
@@ -70,6 +72,7 @@ Your metadata will now be present in the /metadata folder. You can proceed to mi
 ##### Advanced: Metadata individual attributes:
 
 If you would like to create individual attributes, open the metadata_config.py file in a text editor and change the indvdl_attributes variable at the bottom from False to True. Folow step 3 above, except create a metadata_generation_csv_with_attributes.csv. An example can be found in metadata_generation_csv_with_attributes_example.csv.
+You can have as many attributes as you'd like , just delete or add columns to the CSV file. 
 
 #### 2. NFT MINTING
  1. Follow instructions at https://devs.chia.net/guides/nft-intro to create a DID wallet and NFT wallet in the CLI. Make sure the wallet is funded with enough XCH to mint an NFT. If you don't have enough, you can get some from
@@ -87,11 +90,13 @@ If you would like to create individual attributes, open the metadata_config.py f
 5. Customize all variables in the script 'mintingscript.sh' by opening it with a text editor. Make sure you are clear on what they are all for. Many questions can be answered in the Chia NFT documentation, linked above.
 
 6. Install the dependencies: curl and jq. example: if using Ubuntu with apt, run the following commands:
-		sudo apt update
-		sudo apt upgrade
-		sudo apt install curl
-		sudo apt install jq
 
+```shell
+sudo apt update
+sudo apt upgrade
+sudo apt install curl
+sudo apt install jq
+```
 6. Run the script by navigating to the directory of the script and executing the command './mintingscript.sh'
 
 9. Before minting each NFT, the script will prompt you to review the minting command. Please review this command against the Chia documentation for minting a single NFL. Once you continue, the NFT will be created , final & permanent.
