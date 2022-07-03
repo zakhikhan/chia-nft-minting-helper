@@ -5,4 +5,6 @@ metadata_generation_csv_with_attributes.csv
 __pycache__
 images/*
 metadata/*
+.config.py.swp
+.metadata_config.py.swp
 _

@@ -55,7 +55,7 @@ def main_function():
             else:
                 name = csvreader[i][1]
                 description = csvreader[i][2]
-                sensitive_content = csvreader[i][3].lower()
+                sensitive_content = False
                 if indvdl_attributes == True:
                     for j in range(num_attributes):
                         k = j + 4
