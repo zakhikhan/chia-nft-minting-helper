@@ -1,2 +1,8 @@
 config.py
+metadata_config.py
+metadata_generation_csv.csv
+metadata_generation_csv_with_attributes.csv
 __pycache__
+images/*
+metadata/*
+_

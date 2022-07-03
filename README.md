@@ -1,29 +1,80 @@
 # chia-nft-minting-helper
 
-Version 0.3: Added automatic image and metadata uploading. Thanks to @steppsr. Also removed the target address option from minting and changed the deault fee to 0, thanks to scrutinous for the tip. 
+## Changelog
 
-NOTE: THIS SCRIPT IS IN ALPHA, PLEASE USE AT YOUR OWN RISK! ONLY COMPATIBLE WITH LINUX, DO NOT USE ON MACOS! I SUGGEST YOU TRY ON TESTNET FIRST
+Version 0.4: Added a Python script for automatic metadata generation
+
+Version 0.3: Added automatic image and metadata uploading. Thanks to @steppsr. Also removed the target address option from minting and changed the deault fee to 0, thanks to scrutinous for the tip. Also added Python script to do the same by @Rosko. More documentation coming 
+
+## About
+
+NOTE: This script is still an alpha prototype. If you have tested it, please let me know, as your feedback will be immensely helpful. 
 
 a bash script to help make the process of minting a series of NFTs on the Chia Blockchain easier.
-
-This script is in ALPHA, so please use at your own risk. I welcome anyone working on this to improve it. This is the first bash script I've ever written. 
 
 I also want to create another script to create the offer files and upload them to Dexie, but that is TBD.
 
 Happy minting!
 
+## Supported operating systems
 
-### INSTRUCTIONS
+Linux only at the moment. Not tested on MacOS, though I do have a Mac so I will test it soon.
 
+## INSTALL INSTRUCTIONS
+
+Install on Linux using:
+
+```shell
+git clone https://github.com/zakhikhan/chia-nft-minting-helper.git
+```
+
+## UPDATE INSTRUCTIONS
+
+Update using
+```shell
+cd chia-nft-minting-helper
+git pull
+```
+
+
+## USAGE INSTRUCTIONS
+
+#### 1. METADATA GENERATION
+
+Each NFT minted on the Chia Blockchain needs to have an associated metadata file in addition to an NFT file. This tool will automatically generate bulk custom metadata in seconds.
+
+1. Make sure you are updated to version 0.4, and have python installed on your machine.
+
+2. Create a config file named metadata_config.py. This file allows you to customize the common attributes that all metadata files you generate will share. An example can be found in the metadata_config_example.py. If you use this as a template, make sure to change the name to metadata_config.py.
+
+3. Create a metadata_generation_csv.csv file. This file will allow you to customize the attributes that vary with each NFT metadata. An example can be found at metadata_generation_csv_example.csv. Please follow the format of the example exactly without adding or removing fields. You can have as many rows as you want, with each
+row representing 1 NFT.
+
+4. Navigate to the chia-nft-minting-helper directory and run the following command:
+```shell
+python3 generate_metadata.py
+```
+-OR-
+```shell
+python generate_metadata.py
+```
+
+Your metadata will now be present in the /metadata folder. You can proceed to minting your new NFTs.
+
+##### Advanced: Metadata individual attributes:
+
+If you would like to create individual attributes, open the metadata_config.py file in a text editor and change the indvdl_attributes variable at the bottom from False to True. Folow step 3 above, except create a metadata_generation_csv_with_attributes.csv. An example can be found in metadata_generation_csv_with_attributes_example.csv.
+
+#### 2. NFT MINTING
  1. Follow instructions at https://devs.chia.net/guides/nft-intro to create a DID wallet and NFT wallet in the CLI. Make sure the wallet is funded with enough XCH to mint an NFT. If you don't have enough, you can get some from
 	the Chia faucet.
 
- 2. Download this git repository to your machine with Chia installed and running and synced Chia wallet.
+ 2. Make sure Chia installed and running and synced Chia wallet.
 
  3. Add all image files to the /images directory, saved in the format of 'image[x].jpg' (or other extension), with x representing the number in minting order. Do the same for metadata files in the /metadata directory.
 	example: files must be saved as image1.jpg, image2.jpg, image3.jpg, etc. 
 		metadata must be saved as metadata1.json, metadata2.json, metadata3.json, with the numbers on the images and metadata matching up for the same NFT.
-	NOTE: I will soon release a tool for metadata file generation to make the process easier.
+	Note: If you used the metadata generation script the metadata will already be in the proper location for you. Just make sure the numbers on the metadata filenames match up with the image filenames.
 
 4. Sign up for an account at nft.storage and get an API Key
 
@@ -68,4 +119,3 @@ I am happy to help with any questions anyone has.
 
 Features currently not supported: multiple image urls, multiple metadata urls (however these can always be added later to existing NFTs)
 
-NOTE: THIS SCRIPT IS IN ALPHA, PLEASE USE AT YOUR OWN RISK! ONLY COMPATIBLE WITH LINUX, DO NOT USE ON MACOS! I SUGGEST YOU TRY ON TESTNET FIRST
