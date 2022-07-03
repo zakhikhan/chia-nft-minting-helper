@@ -47,10 +47,16 @@ Each NFT minted on the Chia Blockchain needs to have an associated metadata file
 
 2. Create a config file named metadata_config.py. This file allows you to customize the common attributes that all metadata files you generate will share. An example can be found in the metadata_config_example.py. If you use this as a template, make sure to change the name to metadata_config.py.
 
-3. Create a metadata_generation_csv.csv file. This file will allow you to customize the attributes that vary with each NFT metadata. An example can be found at metadata_generation_csv_example.csv. Please follow the format of the example exactly without adding or removing fields. You can have as many rows as you want, with each
+3. Create a subdirectory called /metadata:
+
+```shell
+mkdir metadata
+```
+
+4. Create a metadata_generation_csv.csv file. This file will allow you to customize the attributes that vary with each NFT metadata. An example can be found at metadata_generation_csv_example.csv. Please follow the format of the example exactly without adding or removing fields. You can have as many rows as you want, with each
 row representing 1 NFT.
 
-4. Navigate to the chia-nft-minting-helper directory and run the following command:
+5. Navigate to the chia-nft-minting-helper directory and run the following command:
 ```shell
 python3 generate_metadata.py
 ```
