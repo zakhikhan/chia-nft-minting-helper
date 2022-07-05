@@ -28,9 +28,6 @@ api_key="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkaWQ6ZXRocjoweDc2YjQ1ZT
 # Total number to mint with this script. Should match the number of image files and number of metadata files.
 total_num_to_mint=30
 
-# Total number in NFT Collection. Will be recorded permanently on each NFT.
-total_num_in_series=30
-
 # NFT Wallet Fingerprint (Found in chia client CLI)
 nft_wallet_fingerprint=1731819744
 
@@ -128,7 +125,7 @@ do
 
 	# Create command & Validate with user
 	echo "Please validate the minting details before execution:"
-	read -p "chia wallet nft mint -f $nft_wallet_fingerprint -i $nft_wallet_id -ra $royalty_wallet_address -u $image_url -nh $local_image_hash -mu $metadata_url -mh $local_metadata_hash -sn $i -st $total_num_in_series -rp $royalty_percentage -m $blockchain_minting_fee \n Would you like to mint your NFT? Final answer (y/n)" response
+	read -p "chia wallet nft mint -f $nft_wallet_fingerprint -i $nft_wallet_id -ra $royalty_wallet_address -u $image_url -nh $local_image_hash -mu $metadata_url -mh $local_metadata_hash $total_num_in_series -rp $royalty_percentage -m $blockchain_minting_fee \n Would you like to mint your NFT? Final answer (y/n)" response
        if [ $response == "y" ]
        then
 		echo "Proceeding to mint..."
@@ -143,7 +140,7 @@ do
 	cd ~/chia-blockchain
 	. ./activate
 	chia wallet show
-	#chia wallet nft mint -f $nft_wallet_fingerprint -i $nft_wallet_id -ra $royalty_wallet_address -u $image_url -nh $local_image_hash -mu $metadata_url -mh $local_metadata_hash -sn $i -st $total_num_in_series -rp $royalty_percentage -m $blockchain_minting_fee
+	chia wallet nft mint -f $nft_wallet_fingerprint -i $nft_wallet_id -ra $royalty_wallet_address -u $image_url -nh $local_image_hash -mu $metadata_url -mh $local_metadata_hash-rp $royalty_percentage -m $blockchain_minting_fee
 	deactivate
 	i=$((i+1))
 done
