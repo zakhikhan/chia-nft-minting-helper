@@ -1,6 +1,7 @@
 # chia-nft-minting-helper
 
 ## CHANGELOG
+Version 0.4.1 Removed the -st and -sn flags, as Chia Co. pointed out that they do not represent series number and series total, but edition number and edition total. If you wish to include series number and series total, I recommend putting it in the NFT name or metadata. 
 
 Version 0.4 hotfix: changed metadata generation script to change sensitive content value from string to bool to be in line with Chia official schema. For the time being, the sensitive content value will always be set to false, regardless of what is entered in the CSV.
 
@@ -12,7 +13,7 @@ Version 0.3: Added automatic image and metadata uploading. Thanks to @steppsr. A
 
 NOTE: This script is still an alpha prototype. If you have tested it, please let me know, as your feedback will be immensely helpful. 
 
-a bash script to help make the process of minting a series of NFTs on the Chia Blockchain easier.
+a bash script to help make the process of minting a series of NFTs on the Chia Blockchain easier. This allows you to simply put the images and metadata in their own directories, and automatically uploads them, gets the hashes, and mints the NFTs on the Chia blockchain. There is also a tool for metadata generation. 
 
 I also want to create another script to create the offer files and upload them to Dexie, but that is TBD.
 
