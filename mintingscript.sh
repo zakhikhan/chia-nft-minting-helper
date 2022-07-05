@@ -1,6 +1,6 @@
 #! /bin/bash
 
-# Version 0.3 Alpha
+# Version 0.4.1 Alpha
 
 # Requirements : 
 
