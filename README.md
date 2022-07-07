@@ -1,4 +1,4 @@
-# chia-nft-minting-helper
+# Chia NFT Minting Helper 
 
 ## CHANGELOG
 Version 0.4.1 Removed the -st and -sn flags, as Chia Co. pointed out that they do not represent series number and series total, but edition number and edition total. If you wish to include series number and series total, I recommend putting it in the NFT name or metadata. 
