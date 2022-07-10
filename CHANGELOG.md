@@ -1,7 +1,10 @@
 
 # Change Log
 All notable changes to this project will be documented in this file.
- 
+
+## [0.4.2] 2022-07-10
+Edited minting script to fix an error where the script was looking for the next NFT image in the wrong directory. 
+
 ## [0.4.1] - 2022-07-05
 Removed the `-st` and `-sn` flags, as Chia Network pointed out that they do not represent series number and series total, but edition number and edition total. If you wish to include series number and series total, I recommend putting it in the NFT name or metadata.
 

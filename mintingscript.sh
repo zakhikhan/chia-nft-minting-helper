@@ -20,7 +20,7 @@
 # ------------ START USER-SUPPLIED VARIABLES------------------
 
 # Extension of your images
-img_ext=".jpeg"
+img_ext=".jpg"
 
 # nft.storage API Key
 api_key="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkaWQ6ZXRocjoweDc2YjQ1ZTEzMjJmNzFCYzFDYWVkYUY4YURlZjI5RTY2M0QxMGEyODIiLCJpc3MiOiJuZnQtc3RvcmFnZSIsImlhdCI6MTY1NjYyMjg3MzUxNywibmFtZSI6InNtaWxlIn0.hmWdbte6KvLvs0Gw0W30vBirEfkAa31vczMK7kQH_OE"
@@ -143,6 +143,7 @@ do
 	chia wallet nft mint -f $nft_wallet_fingerprint -i $nft_wallet_id -ra $royalty_wallet_address -u $image_url -nh $local_image_hash -mu $metadata_url -mh $local_metadata_hash-rp $royalty_percentage -m $blockchain_minting_fee
 	deactivate
 	i=$((i+1))
+	cd $OLDPWD
 done
 
 
