@@ -1,6 +1,6 @@
 #! /bin/bash
 
-# Version 0.4.1 Alpha
+# Version 0.4.2 hotfix Alpha
 
 # Requirements : 
 
@@ -140,7 +140,7 @@ do
 	cd ~/chia-blockchain
 	. ./activate
 	chia wallet show
-	chia wallet nft mint -f $nft_wallet_fingerprint -i $nft_wallet_id -ra $royalty_wallet_address -u $image_url -nh $local_image_hash -mu $metadata_url -mh $local_metadata_hash-rp $royalty_percentage -m $blockchain_minting_fee
+	chia wallet nft mint -f $nft_wallet_fingerprint -i $nft_wallet_id -ra $royalty_wallet_address -u $image_url -nh $local_image_hash -mu $metadata_url -mh $local_metadata_hash -rp $royalty_percentage -m $blockchain_minting_fee
 	deactivate
 	i=$((i+1))
 	cd $OLDPWD
