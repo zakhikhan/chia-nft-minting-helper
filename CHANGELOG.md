@@ -2,6 +2,9 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [0.4.2 hotfix] 2022-07-10
+Edited minting script to fix a typo preventing NFTs from being minted. Going forward, will test entire script fully on testnet before each commit to alpha (anyone want some fresh testnet NFTs?!).
+
 ## [0.4.2] 2022-07-10
 Edited minting script to fix an error where the script was looking for the next NFT image in the wrong directory. 
 
