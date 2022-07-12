@@ -57,7 +57,7 @@ i=1
 
 # -------------- END USER-SUPPLIED  VARIABLES---------------------
 
-royalty_prcntg_converted=$royalty_percentage*100
+royalty_prcntg_converted=$(($royalty_percentage*100))
 
 while (( $i <= $total_num_to_mint ))
 do
@@ -76,7 +76,7 @@ do
 	fi
 
 	# Upload image to nft.storage
-	echo "Uploading ${img_pref${i}${img_ext}"
+	echo "Uploading ${img_pref}${i}${img_ext}"
 	
 	response=`curl -X 'POST' "https://api.nft.storage/upload" \
 		-H "accept: application/json" \
