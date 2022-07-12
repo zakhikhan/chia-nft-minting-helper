@@ -1,6 +1,6 @@
 #! /bin/bash
 
-# Version 0.4.2 hotfix Alpha
+# Version 0.4.3 Alpha
 
 # Requirements : 
 
