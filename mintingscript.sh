@@ -19,8 +19,11 @@
 
 # ------------ START USER-SUPPLIED VARIABLES------------------
 
-# Extension of your images
+# Extension of your images, e.g, .png, .jpg, .gif
 img_ext=".jpg"
+
+# Image filename prefix, e.g., in mynft1.jpg, the prefix is `mynft`
+img_pref="mynft"
 
 # nft.storage API Key
 api_key="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkaWQ6ZXRocjoweDc2YjQ1ZTEzMjJmNzFCYzFDYWVkYUY4YURlZjI5RTY2M0QxMGEyODIiLCJpc3MiOiJuZnQtc3RvcmFnZSIsImlhdCI6MTY1NjYyMjg3MzUxNywibmFtZSI6InNtaWxlIn0.hmWdbte6KvLvs0Gw0W30vBirEfkAa31vczMK7kQH_OE"
@@ -34,7 +37,7 @@ nft_wallet_fingerprint=1731819744
 # NFT Wallet ID (found in Chia client CLI)
 nft_wallet_id=8
 
-# Address loyalty rewards will go to
+# Address loyalty rewards will go to - BE SURE TO CHANGE THIS TO YOUR ADDRESS
 royalty_wallet_address='xch103m57yshjuualzslespw4jgg4lgc5jufzmdtn77xkdt2erhtk9hqzp0ynr'
 
 # Royalty percentage as a whole integer. Ex. '8' will be 8%
@@ -54,12 +57,14 @@ i=1
 
 # -------------- END USER-SUPPLIED  VARIABLES---------------------
 
+royalty_prcntg_converted=$(($royalty_percentage*100))
+
 while (( $i <= $total_num_to_mint ))
 do
 	# Check if image exists
-	image_path=${localdir}images/image${i}${img_ext}
+	image_path=${localdir}images/${img_pref}${i}${img_ext}
 	if [ ! -f "$image_path" ]; then
-		echo "User-specified image path ${localdir}images/image${i}${img_ext} does not exist! Check settings. Now exiting."
+		echo "User-specified image path ${localdir}images/${img_pref}${i}${img_ext} does not exist! Check settings. Now exiting."
 		exit
 	fi
 
@@ -71,7 +76,7 @@ do
 	fi
 
 	# Upload image to nft.storage
-	echo "Uploading image${i}"
+	echo "Uploading ${img_pref}${i}${img_ext}"
 	
 	response=`curl -X 'POST' "https://api.nft.storage/upload" \
 		-H "accept: application/json" \
@@ -85,7 +90,7 @@ do
 	echo "Image uploaded successfully. Image url = $image_url"
 
 	# Check if hash of image locally and online match, then save hash as variable
-	local_image_hash=$(sha256sum ${localdir}images/image${i}${img_ext} | head -c 64)
+	local_image_hash=$(sha256sum ${localdir}images/${img_pref}${i}${img_ext} | head -c 64)
 	remote_image_hash=$(curl -s $image_url | sha256sum | head -c 64)
 	if [ $remote_image_hash == $local_image_hash ]
 	then
@@ -125,26 +130,23 @@ do
 
 	# Create command & Validate with user
 	echo "Please validate the minting details before execution:"
-	read -p "chia wallet nft mint -f $nft_wallet_fingerprint -i $nft_wallet_id -ra $royalty_wallet_address -u $image_url -nh $local_image_hash -mu $metadata_url -mh $local_metadata_hash $total_num_in_series -rp $royalty_percentage -m $blockchain_minting_fee \n Would you like to mint your NFT? Final answer (y/n)" response
-       if [ $response == "y" ]
-       then
+	read -p "chia wallet nft mint -f $nft_wallet_fingerprint -i $nft_wallet_id -ra $royalty_wallet_address -u $image_url -nh $local_image_hash -mu $metadata_url -mh $local_metadata_hash $total_num_in_series -rp $royalty_prcntg_converted -m $blockchain_minting_fee \n Would you like to mint your NFT? Final answer (y/n)" response
+	   if [ $response == "y" ]
+	   then
 		echo "Proceeding to mint..."
- 	else
+	 else
 		echo "Mint cancelled!"
 		exit
 	fi		
 
-       	
+		   
 
 	# Start Chia and Execute minting command
 	cd ~/chia-blockchain
 	. ./activate
 	chia wallet show
-	chia wallet nft mint -f $nft_wallet_fingerprint -i $nft_wallet_id -ra $royalty_wallet_address -u $image_url -nh $local_image_hash -mu $metadata_url -mh $local_metadata_hash -rp $royalty_percentage -m $blockchain_minting_fee
+	chia wallet nft mint -f $nft_wallet_fingerprint -i $nft_wallet_id -ra $royalty_wallet_address -u $image_url -nh $local_image_hash -mu $metadata_url -mh $local_metadata_hash -rp $royalty_prcntg_converted -m $blockchain_minting_fee
 	deactivate
 	i=$((i+1))
 	cd $OLDPWD
 done
-
-
-
