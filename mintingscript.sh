@@ -19,7 +19,7 @@
 
 # ------------ START USER-SUPPLIED VARIABLES------------------
 
-# Extension of your images
+# Extension of your images, e.g, .png, .jpg, .gif
 img_ext=".jpg"
 
 # nft.storage API Key
@@ -34,7 +34,7 @@ nft_wallet_fingerprint=1731819744
 # NFT Wallet ID (found in Chia client CLI)
 nft_wallet_id=8
 
-# Address loyalty rewards will go to
+# Address loyalty rewards will go to - BE SURE TO CHANGE THIS TO YOUR ADDRESS
 royalty_wallet_address='xch103m57yshjuualzslespw4jgg4lgc5jufzmdtn77xkdt2erhtk9hqzp0ynr'
 
 # Royalty percentage as a whole integer. Ex. '8' will be 8%
@@ -53,6 +53,8 @@ chia_dir='~/chia-blockchain'
 i=1
 
 # -------------- END USER-SUPPLIED  VARIABLES---------------------
+
+royalty_prcntg_converted=$royalty_percentage*100
 
 while (( $i <= $total_num_to_mint ))
 do
@@ -125,7 +127,7 @@ do
 
 	# Create command & Validate with user
 	echo "Please validate the minting details before execution:"
-	read -p "chia wallet nft mint -f $nft_wallet_fingerprint -i $nft_wallet_id -ra $royalty_wallet_address -u $image_url -nh $local_image_hash -mu $metadata_url -mh $local_metadata_hash $total_num_in_series -rp $royalty_percentage -m $blockchain_minting_fee \n Would you like to mint your NFT? Final answer (y/n)" response
+	read -p "chia wallet nft mint -f $nft_wallet_fingerprint -i $nft_wallet_id -ra $royalty_wallet_address -u $image_url -nh $local_image_hash -mu $metadata_url -mh $local_metadata_hash $total_num_in_series -rp $royalty_prcntg_converted -m $blockchain_minting_fee \n Would you like to mint your NFT? Final answer (y/n)" response
        if [ $response == "y" ]
        then
 		echo "Proceeding to mint..."
@@ -140,7 +142,7 @@ do
 	cd ~/chia-blockchain
 	. ./activate
 	chia wallet show
-	chia wallet nft mint -f $nft_wallet_fingerprint -i $nft_wallet_id -ra $royalty_wallet_address -u $image_url -nh $local_image_hash -mu $metadata_url -mh $local_metadata_hash -rp $royalty_percentage -m $blockchain_minting_fee
+	chia wallet nft mint -f $nft_wallet_fingerprint -i $nft_wallet_id -ra $royalty_wallet_address -u $image_url -nh $local_image_hash -mu $metadata_url -mh $local_metadata_hash -rp $royalty_prcntg_converted -m $blockchain_minting_fee
 	deactivate
 	i=$((i+1))
 	cd $OLDPWD
