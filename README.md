@@ -93,6 +93,8 @@ sudo apt install jq
 
 10. Continue through the process to mint all NFTs. If you have to stop the script, or get an error, you can open the script in a text editor and change the 'i' variable to resume wherever you left off.
 
+[IMPORTANT NOTE: Please wait at least 1 minute in between minting each NFT. In the near future, we will add a function to delay minting automatically, but in the meantime, if you mint too quickly, the mint will fail.]
+
 ### PYTHON UPLOAD INSTRUCTIONS
 #### For both `upload.py` and `upload_cli.py`:
 1. Set up your python environment, install required modules (only `click` as of right now):
