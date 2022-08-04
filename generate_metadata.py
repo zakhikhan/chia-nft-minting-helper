@@ -34,6 +34,8 @@ def main_function():
         collection['attributes'].append({'type':'discord','value':collection_discord})
     if collection_icon:
         collection['attributes'].append({'type':'icon','value':collection_icon})
+    if collection_banner:
+        collection['attributes'].append({'type':'banner','value':collection_banner})
 
 
     n_format = "CHIP-0007"
