@@ -33,6 +33,10 @@ collection_discord = ""
 # Leave as is for none
 collection_icon = ""
 
+# URL of collection banner png image. 
+# Some NFT explorers such as Spacescan.io can show a banner on the NFT collection page
+# Leave as is for none
+collection_banner = ""
 
 
 
