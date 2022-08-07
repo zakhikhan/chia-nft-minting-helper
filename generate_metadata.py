@@ -61,7 +61,7 @@ def main_function():
                 if indvdl_attributes == True:
                     for j in range(num_attributes):
                         k = j + 4
-                        attributes_list.append({"trait type":attribute_names[j],"value":csvreader[i][k]})
+                        attributes_list.append({"trait_type":attribute_names[j],"value":csvreader[i][k]})
                 jsondata['format'] = n_format
                 jsondata['name'] = name
                 jsondata['description'] = description
